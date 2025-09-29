@@ -12,6 +12,11 @@
         body { 
             font-family: 'Inter', sans-serif; 
             box-sizing: border-box;
+            background-image: url('https://i.imgur.com/PQICq2v.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
         }
         /* Hide number input arrows */
         input[type=number]::-webkit-outer-spin-button,
@@ -36,7 +41,9 @@
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="min-h-screen">
+    <!-- Background overlay for better readability -->
+    <div class="fixed inset-0 bg-black bg-opacity-20 pointer-events-none z-0"></div>
     <!-- PIN Login -->
     <div id="loginScreen" class="fixed inset-0 bg-blue-600 flex items-center justify-center z-50">
         <div class="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-md w-full mx-4">
@@ -55,9 +62,9 @@
     </div>
 
     <!-- Main App -->
-    <div id="mainApp" class="hidden">
+    <div id="mainApp" class="hidden relative z-10">
         <!-- Header -->
-        <header class="bg-white shadow-sm border-b">
+        <header class="bg-white bg-opacity-95 backdrop-blur-sm shadow-sm border-b">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center py-4">
                     <div>
@@ -80,7 +87,7 @@
         </header>
 
         <!-- Navigation Tabs -->
-        <nav class="bg-white border-b">
+        <nav class="bg-white bg-opacity-95 backdrop-blur-sm border-b">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex space-x-8">
                     <button id="tab-kasir" onclick="showTab('kasir')" class="py-4 px-1 border-b-2 border-blue-500 text-blue-600 font-medium text-sm">
@@ -106,7 +113,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <!-- Product Search & Scanner -->
                     <div class="lg:col-span-2">
-                        <div class="bg-white rounded-lg shadow p-6 mb-6">
+                        <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow p-6 mb-6">
                             <div class="flex flex-col sm:flex-row gap-4 mb-4">
                                 <div class="flex-1">
                                     <input type="text" id="productSearch" placeholder="Cari produk atau scan barcode..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
@@ -123,7 +130,7 @@
                         </div>
 
                         <!-- Product List -->
-                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow overflow-hidden">
                             <div class="px-6 py-4 border-b border-gray-200">
                                 <h3 class="text-lg font-medium text-gray-900">Daftar Produk</h3>
                             </div>
@@ -149,7 +156,7 @@
 
                     <!-- Quick Actions -->
                     <div class="space-y-6">
-                        <div class="bg-white rounded-lg shadow p-6">
+                        <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow p-6">
                             <h3 class="text-lg font-medium text-gray-900 mb-4">Aksi Cepat</h3>
                             <div class="space-y-3">
                                 <button onclick="showAddProductModal()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">+ Tambah Produk</button>
@@ -159,7 +166,7 @@
                         </div>
 
                         <!-- Quick Stats -->
-                        <div class="bg-white rounded-lg shadow p-6">
+                        <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow p-6">
                             <h3 class="text-lg font-medium text-gray-900 mb-4">Statistik Hari Ini</h3>
                             <div class="space-y-3">
                                 <div class="flex justify-between">
@@ -182,7 +189,7 @@
 
             <!-- Produk Tab -->
             <div id="content-produk" class="tab-content hidden">
-                <div class="bg-white rounded-lg shadow">
+                <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow">
                     <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
                         <h3 class="text-lg font-medium text-gray-900">Manajemen Produk</h3>
                         <button onclick="showAddProductModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">+ Tambah Produk</button>
@@ -199,7 +206,7 @@
             <div id="content-laporan" class="tab-content hidden">
                 <!-- Dashboard Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                    <div class="bg-white rounded-lg shadow p-6">
+                    <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow p-6">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
@@ -217,7 +224,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-lg shadow p-6">
+                    <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow p-6">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
@@ -235,7 +242,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-lg shadow p-6">
+                    <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow p-6">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
@@ -253,7 +260,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-lg shadow p-6">
+                    <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow p-6">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
@@ -275,13 +282,13 @@
                 <!-- Charts and Reports -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <!-- Sales Chart -->
-                    <div class="bg-white rounded-lg shadow p-6">
+                    <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow p-6">
                         <h3 class="text-lg font-medium text-gray-900 mb-4">Grafik Penjualan 7 Hari Terakhir</h3>
                         <canvas id="salesChart" width="400" height="200"></canvas>
                     </div>
 
                     <!-- Top Products -->
-                    <div class="bg-white rounded-lg shadow p-6">
+                    <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow p-6">
                         <h3 class="text-lg font-medium text-gray-900 mb-4">Produk Terlaris</h3>
                         <div id="topProducts" class="space-y-3">
                             <!-- Top products will be rendered here -->
@@ -290,7 +297,7 @@
                 </div>
 
                 <!-- Export Actions -->
-                <div class="mt-6 bg-white rounded-lg shadow p-6">
+                <div class="mt-6 bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow p-6">
                     <h3 class="text-lg font-medium text-gray-900 mb-4">Export & Import</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                         <button onclick="syncToGoogleSheets()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">📤 Export ke Google Sheets</button>
@@ -309,7 +316,7 @@
 
             <!-- Riwayat Tab -->
             <div id="content-riwayat" class="tab-content hidden">
-                <div class="bg-white rounded-lg shadow">
+                <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow">
                     <div class="px-6 py-4 border-b border-gray-200">
                         <h3 class="text-lg font-medium text-gray-900">Riwayat Transaksi</h3>
                     </div>
@@ -350,7 +357,7 @@
 
     <!-- Floating Cart Panel -->
     <div id="cartPanel" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
-        <div class="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-xl transform translate-x-full transition-transform duration-300" id="cartSlider">
+        <div class="fixed right-0 top-0 h-full w-full max-w-md bg-white bg-opacity-95 backdrop-blur-sm shadow-xl transform translate-x-full transition-transform duration-300" id="cartSlider">
             <div class="flex flex-col h-full">
                 <!-- Cart Header -->
                 <div class="flex items-center justify-between p-4 border-b bg-blue-600 text-white">
@@ -386,7 +393,7 @@
     <!-- Modals -->
     <!-- Add Product Modal -->
     <div id="addProductModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+        <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg p-6 w-full max-w-md mx-4">
             <h3 class="text-lg font-semibold mb-4">Tambah Produk Baru</h3>
             <form onsubmit="addProduct(event)">
                 <div class="space-y-4">
@@ -421,7 +428,7 @@
 
     <!-- Payment Modal -->
     <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+        <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg p-6 w-full max-w-md mx-4">
             <h3 class="text-lg font-semibold mb-4">Pembayaran</h3>
             <div class="space-y-4">
                 <div>
@@ -446,7 +453,7 @@
 
     <!-- Receipt Modal -->
     <div id="receiptModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 w-full max-w-lg mx-4">
+        <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg p-6 w-full max-w-lg mx-4">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-semibold">Struk Penjualan</h3>
                 <button onclick="closeReceiptModal()" class="text-gray-500 hover:text-gray-700">✕</button>
@@ -463,7 +470,7 @@
 
     <!-- Add Service Modal -->
     <div id="addServiceModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+        <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg p-6 w-full max-w-md mx-4">
             <h3 class="text-lg font-semibold mb-4">Tambah Jasa Manual</h3>
             <form onsubmit="addServiceFromModal(event)">
                 <div class="space-y-4">
@@ -490,7 +497,7 @@
 
     <!-- Edit Product Modal -->
     <div id="editProductModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+        <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg p-6 w-full max-w-md mx-4">
             <h3 class="text-lg font-semibold mb-4">Edit Produk</h3>
             <form onsubmit="updateProduct(event)">
                 <input type="hidden" id="editProductId">
@@ -833,7 +840,7 @@
 
         function startScanner() {
             if (!codeReader) {
-                alert('Scanner tidak tersedia');
+                showNotification('❌ Scanner tidak tersedia di browser ini', 'error');
                 return;
             }
             
@@ -848,14 +855,22 @@
             codeReader.decodeFromVideoDevice(null, video, (result, err) => {
                 if (result) {
                     const barcode = result.text;
-                    document.getElementById('productSearch').value = barcode;
-                    filterProducts(barcode);
                     stopScanner();
                     
-                    // Auto add if exact match
+                    // Update search field
+                    document.getElementById('productSearch').value = barcode;
+                    filterProducts(barcode);
+                    
+                    // Check if product exists
                     const product = products.find(p => p.barcode === barcode);
                     if (product) {
+                        // Product found - add to cart automatically
                         addToCart(product);
+                        showNotification(`📦 ${product.name} ditambahkan ke keranjang!`, 'success');
+                    } else {
+                        // Product not found - open add product modal with barcode pre-filled
+                        showNotification(`🔍 Produk dengan barcode ${barcode} tidak ditemukan. Silakan tambah produk baru.`, 'warning');
+                        showAddProductModalWithBarcode(barcode);
                     }
                 }
             });
@@ -1410,6 +1425,29 @@
         function showAddProductModal() {
             document.getElementById('addProductModal').classList.remove('hidden');
             document.getElementById('addProductModal').classList.add('flex');
+            
+            // Focus on product name field
+            setTimeout(() => {
+                document.getElementById('newProductName').focus();
+            }, 100);
+        }
+
+        function showAddProductModalWithBarcode(barcode) {
+            // Clear form first
+            document.getElementById('newProductName').value = '';
+            document.getElementById('newProductBarcode').value = barcode;
+            document.getElementById('newProductPrice').value = '';
+            document.getElementById('newProductStock').value = '';
+            document.getElementById('newProductMinStock').value = '5';
+            
+            // Show modal
+            document.getElementById('addProductModal').classList.remove('hidden');
+            document.getElementById('addProductModal').classList.add('flex');
+            
+            // Focus on product name field since barcode is already filled
+            setTimeout(() => {
+                document.getElementById('newProductName').focus();
+            }, 100);
         }
 
         function closeAddProductModal() {
@@ -1427,11 +1465,43 @@
         function addProduct(event) {
             event.preventDefault();
             
-            const name = document.getElementById('newProductName').value;
-            const barcode = document.getElementById('newProductBarcode').value;
+            const name = document.getElementById('newProductName').value.trim();
+            const barcode = document.getElementById('newProductBarcode').value.trim();
             const price = parseInt(document.getElementById('newProductPrice').value);
             const stock = parseInt(document.getElementById('newProductStock').value);
             const minStock = parseInt(document.getElementById('newProductMinStock').value);
+            
+            // Validation
+            if (!name) {
+                showNotification('❌ Nama produk harus diisi!', 'error');
+                document.getElementById('newProductName').focus();
+                return;
+            }
+            
+            if (!price || price <= 0) {
+                showNotification('❌ Harga harus diisi dan lebih dari 0!', 'error');
+                document.getElementById('newProductPrice').focus();
+                return;
+            }
+            
+            if (stock < 0) {
+                showNotification('❌ Stok tidak boleh negatif!', 'error');
+                document.getElementById('newProductStock').focus();
+                return;
+            }
+            
+            if (minStock < 0) {
+                showNotification('❌ Stok minimum tidak boleh negatif!', 'error');
+                document.getElementById('newProductMinStock').focus();
+                return;
+            }
+            
+            // Check if barcode already exists
+            if (barcode && products.some(p => p.barcode === barcode)) {
+                showNotification('❌ Barcode sudah digunakan produk lain!', 'error');
+                document.getElementById('newProductBarcode').focus();
+                return;
+            }
             
             const newProduct = {
                 id: Date.now(),
@@ -1448,6 +1518,16 @@
             renderProducts();
             renderProductList();
             closeAddProductModal();
+            
+            showNotification(`✅ Produk "${name}" berhasil ditambahkan!`, 'success');
+            
+            // If product was added from scanner, automatically add to cart
+            if (barcode && document.getElementById('productSearch').value === barcode) {
+                setTimeout(() => {
+                    addToCart(newProduct);
+                    showNotification(`📦 ${name} langsung ditambahkan ke keranjang!`, 'success');
+                }, 500);
+            }
         }
 
         function renderProductList() {
@@ -2058,5 +2138,5 @@
             });
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9868bc8c306d0fe2',t:'MTc1OTEyMDEzNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'986abfeea246e778',t:'MTc1OTE0MTI0NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
