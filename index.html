@@ -855,21 +855,23 @@
             codeReader.decodeFromVideoDevice(null, video, (result, err) => {
                 if (result) {
                     const barcode = result.text.trim();
-                    stopScanner();
                     
                     // Check if product exists (improved matching)
                     const product = products.find(p => p.barcode && p.barcode.trim() === barcode);
                     
                     if (product) {
-                        // Product found - add to cart automatically
+                        // Product found - add to cart automatically and keep scanning
                         addToCart(product);
-                        showNotification(`📦 ${product.name} ditambahkan ke keranjang!`, 'success');
+                        showNotification(`📦 ${product.name} ditambahkan ke keranjang! Scanner tetap aktif.`, 'success');
                         
                         // Clear search field after successful scan
                         document.getElementById('productSearch').value = '';
                         renderProducts(); // Show all products again
+                        
+                        // Keep scanner running - don't stop
                     } else {
-                        // Product not found - show in search field and open add modal
+                        // Product not found - stop scanner and show add modal
+                        stopScanner();
                         document.getElementById('productSearch').value = barcode;
                         filterProducts(barcode);
                         showNotification(`🔍 Produk dengan barcode ${barcode} tidak ditemukan. Silakan tambah produk baru.`, 'warning');
@@ -1245,6 +1247,9 @@
             
             saveData();
             
+            // Auto-export to Google Sheets after successful transaction
+            autoExportToGoogleSheets('transaction_completed', `Transaksi ${transaction.id} - Rp ${transaction.total.toLocaleString('id-ID')}`);
+            
             // Clear cart
             cart = [];
             renderCart();
@@ -1527,6 +1532,9 @@
             
             showNotification(`✅ Produk "${name}" berhasil ditambahkan!`, 'success');
             
+            // Auto-export to Google Sheets after adding product
+            autoExportToGoogleSheets('product_added', `Produk baru: ${name}`);
+            
             // If product was added from scanner, automatically add to cart
             if (barcode && document.getElementById('productSearch').value === barcode) {
                 setTimeout(() => {
@@ -1622,6 +1630,9 @@
             renderProductList();
             closeEditProductModal();
             
+            // Auto-export to Google Sheets after updating product
+            autoExportToGoogleSheets('product_updated', `Produk diupdate: ${name}`);
+            
             alert('Produk berhasil diperbarui!');
         }
 
@@ -1637,6 +1648,9 @@
             renderProducts();
             renderProductList();
             renderCart();
+            
+            // Auto-export to Google Sheets after deleting product
+            autoExportToGoogleSheets('product_deleted', `Produk dihapus: ${productName}`);
             
             showNotification(`Produk "${productName}" berhasil dihapus!`, 'success');
         }
@@ -1882,6 +1896,79 @@
                 }
             };
             reader.readAsText(file);
+        }
+
+        // Auto Export to Google Sheets
+        function autoExportToGoogleSheets(actionType, description) {
+            // Check if online first
+            if (!navigator.onLine) {
+                console.log('Offline - skipping auto export');
+                return;
+            }
+            
+            // Your Google Apps Script URL
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyOLp3EFK2KWeMiRI86BZpG8PV4fhZuOMUAgj_tkIWsZszggEKSm1JKCIwM8oXa7CgO/exec';
+            
+            const syncData = {
+                action: 'export',
+                actionType: actionType,
+                description: description,
+                transactions: transactions,
+                products: products,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Show subtle notification for auto-export
+            showNotification(`📤 ${description} - Menyinkronkan...`, 'warning');
+            
+            // Create timeout controller with shorter timeout for auto export
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 8000);
+            
+            // Use no-cors mode for auto export (silent)
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'text/plain',
+                },
+                body: JSON.stringify(syncData),
+                signal: controller.signal
+            })
+            .then(response => {
+                clearTimeout(timeoutId);
+                
+                // For no-cors mode, we can't read the response
+                // But if we get here without error, the request was sent successfully
+                if (response.type === 'opaque') {
+                    showNotification(`✅ ${description} - Tersinkronkan!`, 'success');
+                    return;
+                }
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                return response.json();
+            })
+            .then(data => {
+                if (data && data.success) {
+                    showNotification(`✅ ${description} - Tersinkronkan!`, 'success');
+                } else if (data) {
+                    console.log('Auto export warning:', data.error || 'Unknown error');
+                }
+                // If data is undefined, it means we already handled the opaque response above
+            })
+            .catch(error => {
+                clearTimeout(timeoutId);
+                console.log('Auto export failed (silent):', error.message);
+                
+                // Show subtle error notification for auto-export failures
+                if (error.name !== 'AbortError') {
+                    showNotification(`⚠️ ${description} - Sinkronisasi gagal (data tersimpan lokal)`, 'warning');
+                }
+            });
         }
 
         // Auto Import on Login
@@ -2147,5 +2234,5 @@
             });
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'986ae9b590c1cde6',t:'MTc1OTE0Mjk1Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'986bc8e6a42bea89',t:'MTc1OTE1MjA5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
