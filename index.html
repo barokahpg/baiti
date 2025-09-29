@@ -854,21 +854,24 @@
             
             codeReader.decodeFromVideoDevice(null, video, (result, err) => {
                 if (result) {
-                    const barcode = result.text;
+                    const barcode = result.text.trim();
                     stopScanner();
                     
-                    // Update search field
-                    document.getElementById('productSearch').value = barcode;
-                    filterProducts(barcode);
+                    // Check if product exists (improved matching)
+                    const product = products.find(p => p.barcode && p.barcode.trim() === barcode);
                     
-                    // Check if product exists
-                    const product = products.find(p => p.barcode === barcode);
                     if (product) {
                         // Product found - add to cart automatically
                         addToCart(product);
                         showNotification(`📦 ${product.name} ditambahkan ke keranjang!`, 'success');
+                        
+                        // Clear search field after successful scan
+                        document.getElementById('productSearch').value = '';
+                        renderProducts(); // Show all products again
                     } else {
-                        // Product not found - open add product modal with barcode pre-filled
+                        // Product not found - show in search field and open add modal
+                        document.getElementById('productSearch').value = barcode;
+                        filterProducts(barcode);
                         showNotification(`🔍 Produk dengan barcode ${barcode} tidak ditemukan. Silakan tambah produk baru.`, 'warning');
                         showAddProductModalWithBarcode(barcode);
                     }
@@ -1012,6 +1015,9 @@
                 showNotification(`${product.name} ditambahkan ke keranjang`);
             }
             
+            // Clear search field and show all products after adding to cart
+            document.getElementById('productSearch').value = '';
+            renderProducts();
             renderCart();
         }
 
@@ -1526,6 +1532,9 @@
                 setTimeout(() => {
                     addToCart(newProduct);
                     showNotification(`📦 ${name} langsung ditambahkan ke keranjang!`, 'success');
+                    // Clear search field after auto-adding to cart
+                    document.getElementById('productSearch').value = '';
+                    renderProducts();
                 }, 500);
             }
         }
@@ -2138,5 +2147,5 @@
             });
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'986abfeea246e778',t:'MTc1OTE0MTI0NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'986ae9b590c1cde6',t:'MTc1OTE0Mjk1Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
