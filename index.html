@@ -18,6 +18,32 @@
             background-attachment: fixed;
             background-repeat: no-repeat;
         }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            body { font-size: 14px; }
+            .mobile-compact { padding: 0.5rem !important; }
+            .mobile-text-xs { font-size: 0.7rem !important; }
+            .mobile-text-sm { font-size: 0.8rem !important; }
+            .mobile-btn { padding: 0.4rem 0.6rem !important; font-size: 0.75rem !important; }
+            .mobile-input { padding: 0.4rem !important; font-size: 0.8rem !important; }
+            .mobile-table-scroll { max-height: 300px; overflow-y: auto; }
+            .mobile-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.25rem; }
+            .mobile-hide { display: none !important; }
+            .mobile-full { width: 100% !important; }
+        }
+        
+        /* Sticky header for mobile */
+        @media (max-width: 768px) {
+            .mobile-sticky { position: sticky; top: 0; z-index: 30; }
+        }
+        
+        /* Better touch targets */
+        .touch-target { min-height: 44px; min-width: 44px; }
+        
+        /* Compact table for mobile */
+        .mobile-table td { padding: 0.25rem 0.5rem !important; }
+        .mobile-table th { padding: 0.25rem 0.5rem !important; }
         /* Hide number input arrows */
         input[type=number]::-webkit-outer-spin-button,
         input[type=number]::-webkit-inner-spin-button {
@@ -64,57 +90,70 @@
     <!-- Main App -->
     <div id="mainApp" class="hidden relative z-10">
         <!-- Header -->
-        <header class="bg-white bg-opacity-95 backdrop-blur-sm shadow-sm border-b">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center py-4">
+        <header class="bg-white bg-opacity-95 backdrop-blur-sm shadow-sm border-b mobile-sticky">
+            <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-2 md:py-4">
                     <div>
-                        <h1 class="text-xl font-bold text-gray-900">TOKO BAROKAH</h1>
-                        <p class="text-sm text-gray-600">Sistem Kasir Digital</p>
+                        <h1 class="text-lg md:text-xl font-bold text-gray-900">TOKO BAROKAH</h1>
+                        <p class="text-xs md:text-sm text-gray-600 mobile-hide">Sistem Kasir Digital</p>
                     </div>
-                    <div class="flex items-center space-x-4">
-                        <div class="text-right">
-                            <p class="text-sm text-gray-600">Waktu</p>
-                            <p id="currentTime" class="text-sm font-medium text-gray-900">--:--:--</p>
+                    <div class="flex items-center space-x-2 md:space-x-4">
+                        <div class="text-right mobile-hide">
+                            <p class="text-xs text-gray-600">Waktu</p>
+                            <p id="currentTime" class="text-xs font-medium text-gray-900">--:--:--</p>
                         </div>
                         <div class="text-right">
-                            <p class="text-sm text-gray-600">Status</p>
-                            <p id="onlineStatus" class="text-sm font-medium">🟢 Online</p>
+                            <p id="onlineStatus" class="text-xs md:text-sm font-medium">🟢</p>
                         </div>
-                        <button onclick="logout()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">Keluar</button>
+                        <button onclick="logout()" class="bg-red-600 text-white px-2 py-1 md:px-4 md:py-2 rounded text-xs md:text-sm hover:bg-red-700 transition-colors touch-target">Keluar</button>
                     </div>
                 </div>
             </div>
         </header>
 
         <!-- Navigation Tabs -->
-        <nav class="bg-white bg-opacity-95 backdrop-blur-sm border-b">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex space-x-8">
-                    <button id="tab-kasir" onclick="showTab('kasir')" class="py-4 px-1 border-b-2 border-blue-500 text-blue-600 font-medium text-sm">
-                        Kasir
+        <nav class="bg-white bg-opacity-95 backdrop-blur-sm border-b mobile-sticky">
+            <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-4 gap-1 md:flex md:space-x-8">
+                    <button id="tab-kasir" onclick="showTab('kasir')" class="py-2 md:py-4 px-1 border-b-2 border-blue-500 text-blue-600 font-medium text-xs md:text-sm touch-target">
+                        💰 Kasir
                     </button>
-                    <button id="tab-produk" onclick="showTab('produk')" class="py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm">
-                        Produk
+                    <button id="tab-produk" onclick="showTab('produk')" class="py-2 md:py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-xs md:text-sm touch-target">
+                        📦 Produk
                     </button>
-                    <button id="tab-laporan" onclick="showTab('laporan')" class="py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm">
-                        Laporan
+                    <button id="tab-laporan" onclick="showTab('laporan')" class="py-2 md:py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-xs md:text-sm touch-target">
+                        📊 Laporan
                     </button>
-                    <button id="tab-riwayat" onclick="showTab('riwayat')" class="py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm">
-                        Riwayat
+                    <button id="tab-riwayat" onclick="showTab('riwayat')" class="py-2 md:py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 font-medium text-xs md:text-sm touch-target">
+                        📋 Riwayat
                     </button>
                 </div>
             </div>
         </nav>
 
         <!-- Tab Contents -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <main class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-2 md:py-6">
             <!-- Kasir Tab -->
             <div id="content-kasir" class="tab-content">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-2 md:gap-6">
                     <!-- Product Search & Scanner -->
                     <div class="lg:col-span-2">
-                        <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow p-6 mb-6">
-                            <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                        <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow mobile-compact p-3 md:p-6 mb-2 md:mb-6">
+                            <!-- Mobile: Single row layout -->
+                            <div class="grid grid-cols-12 gap-1 md:hidden mb-2">
+                                <div class="col-span-6">
+                                    <input type="text" id="productSearch" placeholder="Cari produk..." class="w-full mobile-input px-2 py-2 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                <div class="col-span-3">
+                                    <button id="scannerBtn" onclick="toggleScanner()" class="w-full mobile-btn bg-green-600 text-white rounded hover:bg-green-700 transition-colors touch-target">📷</button>
+                                </div>
+                                <div class="col-span-3">
+                                    <button onclick="showAddServiceModal()" class="w-full mobile-btn bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors touch-target">🔧</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Desktop: Original layout -->
+                            <div class="hidden md:flex flex-col sm:flex-row gap-4 mb-4">
                                 <div class="flex-1">
                                     <input type="text" id="productSearch" placeholder="Cari produk atau scan barcode..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 </div>
@@ -123,7 +162,7 @@
                             </div>
                             
                             <!-- Scanner Container -->
-                            <div id="scannerContainer" class="scanner-container mx-auto mb-4 hidden">
+                            <div id="scannerContainer" class="scanner-container mx-auto mb-2 md:mb-4 hidden">
                                 <video id="scanner-video" class="rounded-lg"></video>
                                 <div class="scanner-overlay"></div>
                             </div>
@@ -131,10 +170,19 @@
 
                         <!-- Product List -->
                         <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow overflow-hidden">
-                            <div class="px-6 py-4 border-b border-gray-200">
-                                <h3 class="text-lg font-medium text-gray-900">Daftar Produk</h3>
+                            <div class="px-3 md:px-6 py-2 md:py-4 border-b border-gray-200">
+                                <h3 class="text-sm md:text-lg font-medium text-gray-900">📦 Daftar Produk</h3>
                             </div>
-                            <div class="overflow-x-auto">
+                            
+                            <!-- Mobile: Card Layout -->
+                            <div class="md:hidden mobile-table-scroll">
+                                <div id="productCardBody" class="p-2 space-y-2">
+                                    <!-- Product cards will be rendered here for mobile -->
+                                </div>
+                            </div>
+                            
+                            <!-- Desktop: Table Layout -->
+                            <div class="hidden md:block overflow-x-auto">
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
                                         <tr>
@@ -155,8 +203,20 @@
                     </div>
 
                     <!-- Quick Actions -->
-                    <div class="space-y-6">
-                        <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow p-6">
+                    <div class="space-y-2 md:space-y-6">
+                        <!-- Mobile: Horizontal buttons -->
+                        <div class="md:hidden bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow mobile-compact p-2">
+                            <div class="grid grid-cols-1 gap-1">
+                                <button onclick="showAddProductModal()" class="w-full mobile-btn bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors touch-target">➕ Produk</button>
+                                <div class="grid grid-cols-2 gap-1">
+                                    <button onclick="syncToGoogleSheets()" class="mobile-btn bg-green-600 text-white rounded hover:bg-green-700 transition-colors touch-target">📤 Export</button>
+                                    <button onclick="importFromGoogleSheets()" class="mobile-btn bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors touch-target">📥 Import</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Desktop: Original layout -->
+                        <div class="hidden md:block bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow p-6">
                             <h3 class="text-lg font-medium text-gray-900 mb-4">Aksi Cepat</h3>
                             <div class="space-y-3">
                                 <button onclick="showAddProductModal()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">+ Tambah Produk</button>
@@ -166,20 +226,20 @@
                         </div>
 
                         <!-- Quick Stats -->
-                        <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow p-6">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4">Statistik Hari Ini</h3>
-                            <div class="space-y-3">
+                        <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow mobile-compact p-2 md:p-6">
+                            <h3 class="text-sm md:text-lg font-medium text-gray-900 mb-2 md:mb-4">📊 Hari Ini</h3>
+                            <div class="space-y-1 md:space-y-3">
                                 <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Penjualan:</span>
-                                    <span id="todaySalesQuick" class="text-sm font-medium text-green-600">Rp 0</span>
+                                    <span class="text-xs md:text-sm text-gray-600">Penjualan:</span>
+                                    <span id="todaySalesQuick" class="text-xs md:text-sm font-medium text-green-600">Rp 0</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Transaksi:</span>
-                                    <span id="todayTransactionsQuick" class="text-sm font-medium text-blue-600">0</span>
+                                    <span class="text-xs md:text-sm text-gray-600">Transaksi:</span>
+                                    <span id="todayTransactionsQuick" class="text-xs md:text-sm font-medium text-blue-600">0</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-sm text-gray-600">Stok Menipis:</span>
-                                    <span id="lowStockQuick" class="text-sm font-medium text-red-600">0</span>
+                                    <span class="text-xs md:text-sm text-gray-600">Stok Menipis:</span>
+                                    <span id="lowStockQuick" class="text-xs md:text-sm font-medium text-red-600">0</span>
                                 </div>
                             </div>
                         </div>
@@ -190,9 +250,18 @@
             <!-- Produk Tab -->
             <div id="content-produk" class="tab-content hidden">
                 <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow">
-                    <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                        <h3 class="text-lg font-medium text-gray-900">Manajemen Produk</h3>
-                        <button onclick="showAddProductModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">+ Tambah Produk</button>
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-medium text-gray-900">Manajemen Produk</h3>
+                            <button onclick="showAddProductModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">+ Tambah Produk</button>
+                        </div>
+                        <!-- Search Bar -->
+                        <div class="flex gap-4">
+                            <div class="flex-1">
+                                <input type="text" id="productManagementSearch" placeholder="🔍 Cari produk berdasarkan nama, barcode, atau ID..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <button onclick="clearProductSearch()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">Reset</button>
+                        </div>
                     </div>
                     <div class="p-6">
                         <div id="productList" class="space-y-4">
@@ -318,7 +387,20 @@
             <div id="content-riwayat" class="tab-content hidden">
                 <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow">
                     <div class="px-6 py-4 border-b border-gray-200">
-                        <h3 class="text-lg font-medium text-gray-900">Riwayat Transaksi</h3>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Riwayat Transaksi</h3>
+                        <!-- Search and Filter Controls -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <input type="text" id="transactionSearch" placeholder="🔍 Cari ID transaksi atau nama produk..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <input type="date" id="transactionDateFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="filterTransactions()" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Filter</button>
+                                <button onclick="resetTransactionFilters()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">Reset</button>
+                            </div>
+                        </div>
                     </div>
                     <div class="p-6">
                         <div id="transactionHistory" class="space-y-4">
@@ -346,44 +428,44 @@
     </div>
 
     <!-- Floating Cart Button -->
-    <div id="floatingCart" class="fixed bottom-6 right-6 z-40">
-        <button onclick="toggleCart()" class="relative bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hover:scale-110">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div id="floatingCart" class="fixed bottom-4 right-4 z-40">
+        <button onclick="toggleCart()" class="relative bg-blue-600 text-white p-3 md:p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hover:scale-110 touch-target">
+            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
             </svg>
-            <span id="cartBadge" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center hidden">0</span>
+            <span id="cartBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 md:h-6 md:w-6 flex items-center justify-center hidden">0</span>
         </button>
     </div>
 
     <!-- Floating Cart Panel -->
     <div id="cartPanel" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
-        <div class="fixed right-0 top-0 h-full w-full max-w-md bg-white bg-opacity-95 backdrop-blur-sm shadow-xl transform translate-x-full transition-transform duration-300" id="cartSlider">
+        <div class="fixed right-0 top-0 h-full w-full max-w-sm md:max-w-md bg-white bg-opacity-95 backdrop-blur-sm shadow-xl transform translate-x-full transition-transform duration-300" id="cartSlider">
             <div class="flex flex-col h-full">
                 <!-- Cart Header -->
-                <div class="flex items-center justify-between p-4 border-b bg-blue-600 text-white">
-                    <h3 class="text-lg font-semibold">Keranjang Belanja</h3>
-                    <button onclick="toggleCart()" class="text-white hover:text-gray-200">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="flex items-center justify-between p-3 md:p-4 border-b bg-blue-600 text-white">
+                    <h3 class="text-sm md:text-lg font-semibold">🛒 Keranjang</h3>
+                    <button onclick="toggleCart()" class="text-white hover:text-gray-200 touch-target">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
                     </button>
                 </div>
                 
                 <!-- Cart Items -->
-                <div class="flex-1 overflow-y-auto p-4">
-                    <div id="cartItems" class="space-y-3">
-                        <p class="text-gray-500 text-center py-8">Keranjang kosong</p>
+                <div class="flex-1 overflow-y-auto p-2 md:p-4">
+                    <div id="cartItems" class="space-y-2 md:space-y-3">
+                        <p class="text-gray-500 text-center py-8 text-sm">Keranjang kosong</p>
                     </div>
                 </div>
                 
                 <!-- Cart Footer -->
-                <div class="border-t p-4 bg-gray-50">
-                    <div class="flex justify-between items-center text-lg font-semibold mb-4">
+                <div class="border-t p-3 md:p-4 bg-gray-50">
+                    <div class="flex justify-between items-center text-sm md:text-lg font-semibold mb-3 md:mb-4">
                         <span>Total:</span>
                         <span id="cartTotal" class="text-blue-600">Rp 0</span>
                     </div>
-                    <button onclick="processPayment()" id="checkoutBtn" class="w-full bg-green-600 text-white py-3 rounded-lg font-medium hover:bg-green-700 transition-colors disabled:bg-gray-400" disabled>
-                        Bayar Sekarang
+                    <button onclick="processPayment()" id="checkoutBtn" class="w-full bg-green-600 text-white py-3 rounded-lg font-medium hover:bg-green-700 transition-colors disabled:bg-gray-400 touch-target text-sm md:text-base" disabled>
+                        💳 Bayar Sekarang
                     </button>
                 </div>
             </div>
@@ -589,10 +671,61 @@
             renderProducts();
             updateDashboard();
             
-            // Product search
-            document.getElementById('productSearch').addEventListener('input', function(e) {
+            // Product search - both desktop and mobile
+            const productSearchInputs = document.querySelectorAll('#productSearch');
+            productSearchInputs.forEach(input => {
+                // Real-time search on input
+                input.addEventListener('input', function(e) {
+                    const query = e.target.value.toLowerCase();
+                    if (query.trim() === '') {
+                        renderProducts(); // Show all products when search is empty
+                    } else {
+                        filterProducts(query);
+                    }
+                });
+                
+                // Handle Enter key for product search
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = e.target.value.toLowerCase().trim();
+                        if (query) {
+                            // Try to find exact match first
+                            const exactMatch = products.find(p => 
+                                p.barcode === query || 
+                                p.name.toLowerCase() === query ||
+                                p.id.toString() === query
+                            );
+                            
+                            if (exactMatch && exactMatch.stock > 0) {
+                                addToCart(exactMatch);
+                                e.target.value = '';
+                                renderProducts();
+                            } else {
+                                // Show filtered results
+                                filterProducts(query);
+                            }
+                        } else {
+                            renderProducts(); // Show all products if empty search
+                        }
+                    }
+                });
+            });
+            
+            // Product management search
+            document.getElementById('productManagementSearch').addEventListener('input', function(e) {
                 const query = e.target.value.toLowerCase();
-                filterProducts(query);
+                filterProductManagement(query);
+            });
+            
+            // Transaction search
+            document.getElementById('transactionSearch').addEventListener('input', function(e) {
+                filterTransactions();
+            });
+            
+            // Date filter
+            document.getElementById('transactionDateFilter').addEventListener('change', function(e) {
+                filterTransactions();
             });
         });
 
@@ -741,92 +874,198 @@
 
         // Product management
         function renderProducts() {
+            // Desktop table
             const tableBody = document.getElementById('productTableBody');
-            tableBody.innerHTML = '';
+            if (tableBody) {
+                tableBody.innerHTML = '';
+                
+                products.forEach(product => {
+                    const row = document.createElement('tr');
+                    row.className = 'border-b hover:bg-gray-50 cursor-pointer';
+                    row.onclick = () => addToCart(product);
+                    
+                    const stockClass = product.stock <= product.minStock ? 'text-red-600' : 'text-green-600';
+                    const statusText = product.stock <= 0 ? 'Habis' : product.stock <= product.minStock ? 'Menipis' : 'Tersedia';
+                    const statusClass = product.stock <= 0 ? 'bg-red-100 text-red-800' : product.stock <= product.minStock ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800';
+                    
+                    row.innerHTML = `
+                        <td class="py-3 px-4">
+                            <div class="font-medium text-sm">${product.name}</div>
+                            <div class="text-xs text-gray-500">ID: ${product.id}</div>
+                        </td>
+                        <td class="py-3 px-4 text-sm text-gray-600">${product.barcode || '-'}</td>
+                        <td class="py-3 px-4 text-right">
+                            <span class="font-semibold text-blue-600 whitespace-nowrap">Rp ${product.price.toLocaleString('id-ID')}</span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <span class="font-medium ${stockClass}">${product.stock}</span>
+                            <div class="text-xs text-gray-500">Min: ${product.minStock}</div>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <span class="px-2 py-1 rounded-full text-xs font-medium ${statusClass}">${statusText}</span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <button onclick="event.stopPropagation(); addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})" 
+                                    class="px-3 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700 transition-colors ${product.stock <= 0 ? 'opacity-50 cursor-not-allowed' : ''}"
+                                    ${product.stock <= 0 ? 'disabled' : ''}>
+                                ${product.stock <= 0 ? 'Habis' : 'Tambah'}
+                            </button>
+                        </td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+            }
             
-            products.forEach(product => {
-                const row = document.createElement('tr');
-                row.className = 'border-b hover:bg-gray-50 cursor-pointer';
-                row.onclick = () => addToCart(product);
+            // Mobile cards - show only first 5 products with scroll
+            const cardBody = document.getElementById('productCardBody');
+            if (cardBody) {
+                cardBody.innerHTML = '';
                 
-                const stockClass = product.stock <= product.minStock ? 'text-red-600' : 'text-green-600';
-                const statusText = product.stock <= 0 ? 'Habis' : product.stock <= product.minStock ? 'Menipis' : 'Tersedia';
-                const statusClass = product.stock <= 0 ? 'bg-red-100 text-red-800' : product.stock <= product.minStock ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800';
+                // Show only first 5 products for mobile to save space
+                const displayProducts = products.slice(0, 5);
                 
-                row.innerHTML = `
-                    <td class="py-3 px-4">
-                        <div class="font-medium text-sm">${product.name}</div>
-                        <div class="text-xs text-gray-500">ID: ${product.id}</div>
-                    </td>
-                    <td class="py-3 px-4 text-sm text-gray-600">${product.barcode || '-'}</td>
-                    <td class="py-3 px-4 text-right">
-                        <span class="font-semibold text-blue-600 whitespace-nowrap">Rp ${product.price.toLocaleString('id-ID')}</span>
-                    </td>
-                    <td class="py-3 px-4 text-center">
-                        <span class="font-medium ${stockClass}">${product.stock}</span>
-                        <div class="text-xs text-gray-500">Min: ${product.minStock}</div>
-                    </td>
-                    <td class="py-3 px-4 text-center">
-                        <span class="px-2 py-1 rounded-full text-xs font-medium ${statusClass}">${statusText}</span>
-                    </td>
-                    <td class="py-3 px-4 text-center">
-                        <button onclick="event.stopPropagation(); addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})" 
-                                class="px-3 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700 transition-colors ${product.stock <= 0 ? 'opacity-50 cursor-not-allowed' : ''}"
-                                ${product.stock <= 0 ? 'disabled' : ''}>
-                            ${product.stock <= 0 ? 'Habis' : 'Tambah'}
-                        </button>
-                    </td>
-                `;
+                displayProducts.forEach(product => {
+                    const stockClass = product.stock <= product.minStock ? 'text-red-600' : 'text-green-600';
+                    const statusText = product.stock <= 0 ? '❌ Habis' : product.stock <= product.minStock ? '⚠️ Menipis' : '✅ Tersedia';
+                    
+                    const card = document.createElement('div');
+                    card.className = 'bg-gray-50 border rounded-lg p-2 cursor-pointer hover:bg-gray-100 transition-colors';
+                    card.onclick = () => addToCart(product);
+                    
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-1">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-medium text-xs truncate">${product.name}</h4>
+                                <p class="text-xs text-gray-500">Rp ${product.price.toLocaleString('id-ID')}</p>
+                            </div>
+                            <div class="text-right ml-2">
+                                <p class="text-xs ${stockClass} font-medium">${product.stock}</p>
+                                <p class="text-xs text-gray-400">${statusText}</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="text-xs text-gray-500">
+                                ${product.barcode ? `📊 ${product.barcode.slice(-4)}` : 'No barcode'}
+                            </div>
+                            <button onclick="event.stopPropagation(); addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})" 
+                                    class="mobile-btn bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors touch-target ${product.stock <= 0 ? 'opacity-50 cursor-not-allowed' : ''}"
+                                    ${product.stock <= 0 ? 'disabled' : ''}>
+                                ${product.stock <= 0 ? '❌' : '➕'}
+                            </button>
+                        </div>
+                    `;
+                    
+                    cardBody.appendChild(card);
+                });
                 
-                tableBody.appendChild(row);
-            });
+                // Add "show more" indicator if there are more products
+                if (products.length > 5) {
+                    const moreCard = document.createElement('div');
+                    moreCard.className = 'bg-blue-50 border-2 border-dashed border-blue-300 rounded-lg p-2 text-center cursor-pointer hover:bg-blue-100 transition-colors';
+                    moreCard.onclick = () => showTab('produk');
+                    moreCard.innerHTML = `
+                        <p class="text-xs text-blue-600 font-medium">+${products.length - 5} produk lainnya</p>
+                        <p class="text-xs text-blue-500">Tap untuk lihat semua</p>
+                    `;
+                    cardBody.appendChild(moreCard);
+                }
+            }
         }
 
         function filterProducts(query) {
-            const tableBody = document.getElementById('productTableBody');
-            tableBody.innerHTML = '';
-            
             const filtered = products.filter(product => 
                 product.name.toLowerCase().includes(query) || 
                 (product.barcode && product.barcode.includes(query))
             );
             
-            filtered.forEach(product => {
-                const row = document.createElement('tr');
-                row.className = 'border-b hover:bg-gray-50 cursor-pointer';
-                row.onclick = () => addToCart(product);
+            // Desktop table
+            const tableBody = document.getElementById('productTableBody');
+            if (tableBody) {
+                tableBody.innerHTML = '';
                 
-                const stockClass = product.stock <= product.minStock ? 'text-red-600' : 'text-green-600';
-                const statusText = product.stock <= 0 ? 'Habis' : product.stock <= product.minStock ? 'Menipis' : 'Tersedia';
-                const statusClass = product.stock <= 0 ? 'bg-red-100 text-red-800' : product.stock <= product.minStock ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800';
+                filtered.forEach(product => {
+                    const row = document.createElement('tr');
+                    row.className = 'border-b hover:bg-gray-50 cursor-pointer';
+                    row.onclick = () => addToCart(product);
+                    
+                    const stockClass = product.stock <= product.minStock ? 'text-red-600' : 'text-green-600';
+                    const statusText = product.stock <= 0 ? 'Habis' : product.stock <= product.minStock ? 'Menipis' : 'Tersedia';
+                    const statusClass = product.stock <= 0 ? 'bg-red-100 text-red-800' : product.stock <= product.minStock ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800';
+                    
+                    row.innerHTML = `
+                        <td class="py-3 px-4">
+                            <div class="font-medium text-sm">${product.name}</div>
+                            <div class="text-xs text-gray-500">ID: ${product.id}</div>
+                        </td>
+                        <td class="py-3 px-4 text-sm text-gray-600">${product.barcode || '-'}</td>
+                        <td class="py-3 px-4 text-right">
+                            <span class="font-semibold text-blue-600 whitespace-nowrap">Rp ${product.price.toLocaleString('id-ID')}</span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <span class="font-medium ${stockClass}">${product.stock}</span>
+                            <div class="text-xs text-gray-500">Min: ${product.minStock}</div>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <span class="px-2 py-1 rounded-full text-xs font-medium ${statusClass}">${statusText}</span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <button onclick="event.stopPropagation(); addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})" 
+                                    class="px-3 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700 transition-colors ${product.stock <= 0 ? 'opacity-50 cursor-not-allowed' : ''}"
+                                    ${product.stock <= 0 ? 'disabled' : ''}>
+                                ${product.stock <= 0 ? 'Habis' : 'Tambah'}
+                            </button>
+                        </td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+            }
+            
+            // Mobile cards
+            const cardBody = document.getElementById('productCardBody');
+            if (cardBody) {
+                cardBody.innerHTML = '';
                 
-                row.innerHTML = `
-                    <td class="py-3 px-4">
-                        <div class="font-medium text-sm">${product.name}</div>
-                        <div class="text-xs text-gray-500">ID: ${product.id}</div>
-                    </td>
-                    <td class="py-3 px-4 text-sm text-gray-600">${product.barcode || '-'}</td>
-                    <td class="py-3 px-4 text-right">
-                        <span class="font-semibold text-blue-600 whitespace-nowrap">Rp ${product.price.toLocaleString('id-ID')}</span>
-                    </td>
-                    <td class="py-3 px-4 text-center">
-                        <span class="font-medium ${stockClass}">${product.stock}</span>
-                        <div class="text-xs text-gray-500">Min: ${product.minStock}</div>
-                    </td>
-                    <td class="py-3 px-4 text-center">
-                        <span class="px-2 py-1 rounded-full text-xs font-medium ${statusClass}">${statusText}</span>
-                    </td>
-                    <td class="py-3 px-4 text-center">
-                        <button onclick="event.stopPropagation(); addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})" 
-                                class="px-3 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700 transition-colors ${product.stock <= 0 ? 'opacity-50 cursor-not-allowed' : ''}"
-                                ${product.stock <= 0 ? 'disabled' : ''}>
-                            ${product.stock <= 0 ? 'Habis' : 'Tambah'}
-                        </button>
-                    </td>
-                `;
+                // Show all filtered results for mobile when searching
+                filtered.forEach(product => {
+                    const stockClass = product.stock <= product.minStock ? 'text-red-600' : 'text-green-600';
+                    const statusText = product.stock <= 0 ? '❌ Habis' : product.stock <= product.minStock ? '⚠️ Menipis' : '✅ Tersedia';
+                    
+                    const card = document.createElement('div');
+                    card.className = 'bg-gray-50 border rounded-lg p-2 cursor-pointer hover:bg-gray-100 transition-colors';
+                    card.onclick = () => addToCart(product);
+                    
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-1">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-medium text-xs truncate">${product.name}</h4>
+                                <p class="text-xs text-gray-500">Rp ${product.price.toLocaleString('id-ID')}</p>
+                            </div>
+                            <div class="text-right ml-2">
+                                <p class="text-xs ${stockClass} font-medium">${product.stock}</p>
+                                <p class="text-xs text-gray-400">${statusText}</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="text-xs text-gray-500">
+                                ${product.barcode ? `📊 ${product.barcode.slice(-4)}` : 'No barcode'}
+                            </div>
+                            <button onclick="event.stopPropagation(); addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})" 
+                                    class="mobile-btn bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors touch-target ${product.stock <= 0 ? 'opacity-50 cursor-not-allowed' : ''}"
+                                    ${product.stock <= 0 ? 'disabled' : ''}>
+                                ${product.stock <= 0 ? '❌' : '➕'}
+                            </button>
+                        </div>
+                    `;
+                    
+                    cardBody.appendChild(card);
+                });
                 
-                tableBody.appendChild(row);
-            });
+                if (filtered.length === 0) {
+                    cardBody.innerHTML = '<p class="text-gray-500 text-center py-4 text-xs">Tidak ada produk ditemukan</p>';
+                }
+            }
         }
 
         // Barcode scanner
@@ -863,10 +1102,6 @@
                         // Product found - add to cart automatically and keep scanning
                         addToCart(product);
                         showNotification(`📦 ${product.name} ditambahkan ke keranjang! Scanner tetap aktif.`, 'success');
-                        
-                        // Clear search field after successful scan
-                        document.getElementById('productSearch').value = '';
-                        renderProducts(); // Show all products again
                         
                         // Keep scanner running - don't stop
                     } else {
@@ -1018,7 +1253,11 @@
             }
             
             // Clear search field and show all products after adding to cart
-            document.getElementById('productSearch').value = '';
+            const searchField = document.getElementById('productSearch');
+            if (searchField) {
+                searchField.value = '';
+                searchField.focus(); // Keep focus on search field for continuous scanning/searching
+            }
             renderProducts();
             renderCart();
         }
@@ -1082,7 +1321,7 @@
             }
             
             if (cart.length === 0) {
-                cartItems.innerHTML = '<p class="text-gray-500 text-center py-8">Keranjang kosong</p>';
+                cartItems.innerHTML = '<p class="text-gray-500 text-center py-8 text-sm">Keranjang kosong</p>';
                 cartTotal.textContent = 'Rp 0';
                 checkoutBtn.disabled = true;
                 return;
@@ -1096,29 +1335,29 @@
                 total += itemTotal;
                 
                 const cartItem = document.createElement('div');
-                cartItem.className = 'bg-white border rounded-lg p-3 shadow-sm';
+                cartItem.className = 'bg-white border rounded-lg p-2 md:p-3 shadow-sm';
                 cartItem.innerHTML = `
                     <div class="flex justify-between items-start mb-2">
-                        <div class="flex-1">
-                            <h5 class="font-medium text-sm text-gray-800">${item.name}</h5>
+                        <div class="flex-1 min-w-0">
+                            <h5 class="font-medium text-xs md:text-sm text-gray-800 truncate">${item.name}</h5>
                             <p class="text-xs text-gray-500">${item.quantity} x Rp ${item.price.toLocaleString('id-ID')}</p>
                             ${item.discount > 0 ? `<p class="text-xs text-red-600">Diskon: -Rp ${item.discount.toLocaleString('id-ID')}</p>` : ''}
                         </div>
-                        <div class="text-right">
-                            <p class="font-semibold text-sm text-blue-600">Rp ${itemTotal.toLocaleString('id-ID')}</p>
+                        <div class="text-right ml-2">
+                            <p class="font-semibold text-xs md:text-sm text-blue-600">Rp ${itemTotal.toLocaleString('id-ID')}</p>
                         </div>
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-1">
-                            <button onclick="updateQuantity(${index}, -1)" class="w-7 h-7 bg-red-500 text-white rounded-full text-xs hover:bg-red-600 transition-colors">-</button>
+                            <button onclick="updateQuantity(${index}, -1)" class="w-6 h-6 md:w-7 md:h-7 bg-red-500 text-white rounded-full text-xs hover:bg-red-600 transition-colors touch-target">-</button>
                             <input type="number" value="${item.quantity}" min="1" max="${item.isService ? 999999 : getProductStock(item.id)}" 
                                    onchange="setQuantity(${index}, this.value)" 
-                                   class="w-12 text-xs text-center border border-gray-300 rounded px-1 py-1">
-                            <button onclick="updateQuantity(${index}, 1)" class="w-7 h-7 bg-green-500 text-white rounded-full text-xs hover:bg-green-600 transition-colors">+</button>
+                                   class="w-8 md:w-12 text-xs text-center border border-gray-300 rounded px-1 py-1">
+                            <button onclick="updateQuantity(${index}, 1)" class="w-6 h-6 md:w-7 md:h-7 bg-green-500 text-white rounded-full text-xs hover:bg-green-600 transition-colors touch-target">+</button>
                         </div>
                         <div class="flex items-center space-x-1">
-                            <button onclick="setDiscount(${index})" class="px-2 py-1 text-xs text-blue-600 hover:bg-blue-50 rounded" title="Diskon">💰</button>
-                            <button onclick="removeFromCart(${index})" class="px-2 py-1 text-xs text-red-600 hover:bg-red-50 rounded" title="Hapus">🗑</button>
+                            <button onclick="setDiscount(${index})" class="px-1 py-1 text-xs text-blue-600 hover:bg-blue-50 rounded touch-target" title="Diskon">💰</button>
+                            <button onclick="removeFromCart(${index})" class="px-1 py-1 text-xs text-red-600 hover:bg-red-50 rounded touch-target" title="Hapus">🗑</button>
                         </div>
                     </div>
                 `;
@@ -1547,20 +1786,27 @@
             }
         }
 
-        function renderProductList() {
+        function renderProductList(productsToRender = null) {
             const productList = document.getElementById('productList');
             productList.innerHTML = '';
             
-            products.forEach(product => {
+            const productsData = productsToRender || products;
+            
+            if (productsData.length === 0) {
+                productList.innerHTML = '<p class="text-gray-500 text-center py-8">Tidak ada produk ditemukan</p>';
+                return;
+            }
+            
+            productsData.forEach(product => {
                 const productItem = document.createElement('div');
-                productItem.className = 'flex justify-between items-center p-4 border rounded-lg';
+                productItem.className = 'flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors';
                 
                 const stockClass = product.stock <= product.minStock ? 'text-red-600' : 'text-green-600';
                 
                 productItem.innerHTML = `
                     <div>
                         <h4 class="font-semibold">${product.name}</h4>
-                        <p class="text-sm text-gray-600">Barcode: ${product.barcode || 'Tidak ada'}</p>
+                        <p class="text-sm text-gray-600">ID: ${product.id} | Barcode: ${product.barcode || 'Tidak ada'}</p>
                         <p class="text-sm">Harga: Rp ${product.price.toLocaleString('id-ID')}</p>
                         <p class="text-sm ${stockClass}">Stok: ${product.stock} (Min: ${product.minStock})</p>
                         <p class="text-sm text-blue-600">Terjual: ${product.sold || 0}</p>
@@ -1761,15 +2007,21 @@
         }
 
         // Transaction history
-        function renderTransactionHistory() {
+        function renderTransactionHistory(transactionsToRender = null) {
             const historyContainer = document.getElementById('transactionHistory');
             historyContainer.innerHTML = '';
             
-            const sortedTransactions = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
+            const transactionsData = transactionsToRender || transactions;
+            const sortedTransactions = [...transactionsData].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            if (sortedTransactions.length === 0) {
+                historyContainer.innerHTML = '<p class="text-gray-500 text-center py-8">Tidak ada transaksi ditemukan</p>';
+                return;
+            }
             
             sortedTransactions.forEach(transaction => {
                 const transactionItem = document.createElement('div');
-                transactionItem.className = 'border rounded-lg p-4';
+                transactionItem.className = 'border rounded-lg p-4 hover:bg-gray-50 transition-colors';
                 transactionItem.innerHTML = `
                     <div class="flex justify-between items-start mb-2">
                         <div>
@@ -1781,8 +2033,13 @@
                             <p class="text-sm text-gray-600">${transaction.items.length} item</p>
                         </div>
                     </div>
-                    <div class="text-sm text-gray-600">
+                    <div class="text-sm text-gray-600 mb-3">
                         ${transaction.items.map(item => `${item.name} (${item.quantity}x)`).join(', ')}
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                        <button onclick="printTransactionReceipt('${transaction.id}')" class="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition-colors">🖨️ Print Normal</button>
+                        <button onclick="printTransactionThermal('${transaction.id}')" class="px-3 py-1 bg-green-600 text-white rounded text-sm hover:bg-green-700 transition-colors">🖨️ Print Thermal</button>
+                        <button onclick="viewTransactionDetails('${transaction.id}')" class="px-3 py-1 bg-purple-600 text-white rounded text-sm hover:bg-purple-700 transition-colors">👁️ Detail</button>
                     </div>
                 `;
                 
@@ -1969,6 +2226,237 @@
                     showNotification(`⚠️ ${description} - Sinkronisasi gagal (data tersimpan lokal)`, 'warning');
                 }
             });
+        }
+
+        // Print specific transaction functions
+        function printTransactionReceipt(transactionId) {
+            const transaction = transactions.find(t => t.id === transactionId);
+            if (!transaction) {
+                showNotification('❌ Transaksi tidak ditemukan!', 'error');
+                return;
+            }
+            
+            const receiptContent = generateReceiptHTML(transaction);
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Struk - ${transaction.id}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; }
+                        .text-center { text-align: center; }
+                        .text-right { text-align: right; }
+                        .font-bold { font-weight: bold; }
+                        .font-semibold { font-weight: 600; }
+                        .text-lg { font-size: 1.125rem; }
+                        .text-sm { font-size: 0.875rem; }
+                        .text-xs { font-size: 0.75rem; }
+                        .mb-4 { margin-bottom: 1rem; }
+                        .my-2 { margin: 0.5rem 0; }
+                        .mt-4 { margin-top: 1rem; }
+                        .space-y-1 > * + * { margin-top: 0.25rem; }
+                        .flex { display: flex; }
+                        .justify-between { justify-content: space-between; }
+                        .text-gray-600 { color: #4b5563; }
+                        .text-red-600 { color: #dc2626; }
+                    </style>
+                </head>
+                <body>${receiptContent}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function printTransactionThermal(transactionId) {
+            const transaction = transactions.find(t => t.id === transactionId);
+            if (!transaction) {
+                showNotification('❌ Transaksi tidak ditemukan!', 'error');
+                return;
+            }
+            
+            const thermalContent = generateThermalReceipt(transaction);
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Struk Thermal - ${transaction.id}</title>
+                    <style>
+                        body { 
+                            font-family: 'Courier New', monospace; 
+                            margin: 0; 
+                            padding: 20px;
+                            font-size: 12px;
+                            line-height: 1.2;
+                        }
+                        pre { 
+                            margin: 0; 
+                            white-space: pre-wrap;
+                            word-wrap: break-word;
+                        }
+                        @media print {
+                            body { margin: 0; padding: 5px; }
+                            @page { margin: 0; }
+                        }
+                    </style>
+                </head>
+                <body><pre>${thermalContent}</pre></body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function viewTransactionDetails(transactionId) {
+            const transaction = transactions.find(t => t.id === transactionId);
+            if (!transaction) {
+                showNotification('❌ Transaksi tidak ditemukan!', 'error');
+                return;
+            }
+            
+            showReceipt(transaction);
+        }
+
+        function generateReceiptHTML(transaction) {
+            return `
+                <div class="text-center mb-4">
+                    <h2 class="text-lg font-bold">TOKO BAROKAH</h2>
+                    <p class="text-sm">DESA PEMATANG GADUNG</p>
+                    <p class="text-xs">RT. 02 Desa Pematang Gadung, Kecamatan Mersam</p>
+                    <p class="text-xs">Kabupaten Batang Hari, Provinsi Jambi</p>
+                    <hr class="my-2">
+                    <p class="text-xs">No: ${transaction.id}</p>
+                    <p class="text-xs">${new Date(transaction.date).toLocaleString('id-ID')}</p>
+                </div>
+                
+                <div class="space-y-1 mb-4">
+                    ${transaction.items.map(item => `
+                        <div class="flex justify-between text-sm">
+                            <div>
+                                <div>${item.name}</div>
+                                <div class="text-xs text-gray-600">${item.quantity} x Rp ${item.price.toLocaleString('id-ID')}</div>
+                                ${item.discount > 0 ? `<div class="text-xs text-red-600">Diskon: -Rp ${item.discount.toLocaleString('id-ID')}</div>` : ''}
+                            </div>
+                            <div class="text-right">
+                                Rp ${((item.price * item.quantity) - item.discount).toLocaleString('id-ID')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <hr class="my-2">
+                <div class="space-y-1 text-sm">
+                    <div class="flex justify-between font-semibold">
+                        <span>Total:</span>
+                        <span>Rp ${transaction.total.toLocaleString('id-ID')}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Bayar:</span>
+                        <span>Rp ${transaction.received.toLocaleString('id-ID')}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Kembali:</span>
+                        <span>Rp ${transaction.change.toLocaleString('id-ID')}</span>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4 text-xs">
+                    <p>Terima kasih atas kunjungan Anda!</p>
+                    <p>Barang yang sudah dibeli tidak dapat dikembalikan</p>
+                </div>
+            `;
+        }
+
+        function generateThermalReceipt(transaction) {
+            let thermalContent = '';
+            thermalContent += '================================\n';
+            thermalContent += '         TOKO BAROKAH          \n';
+            thermalContent += '     DESA PEMATANG GADUNG      \n';
+            thermalContent += 'RT. 02 Desa Pematang Gadung,   \n';
+            thermalContent += 'Kecamatan Mersam, Kab. Batang  \n';
+            thermalContent += 'Hari, Provinsi Jambi           \n';
+            thermalContent += '================================\n';
+            thermalContent += `No: ${transaction.id}\n`;
+            thermalContent += `${new Date(transaction.date).toLocaleString('id-ID')}\n`;
+            thermalContent += '--------------------------------\n';
+            
+            transaction.items.forEach(item => {
+                thermalContent += `${item.name}\n`;
+                thermalContent += `${item.quantity} x ${item.price.toLocaleString('id-ID')}`;
+                const itemTotal = (item.price * item.quantity) - item.discount;
+                thermalContent += `${' '.repeat(32 - (item.quantity + ' x ' + item.price.toLocaleString('id-ID') + itemTotal.toLocaleString('id-ID')).length)}${itemTotal.toLocaleString('id-ID')}\n`;
+                if (item.discount > 0) {
+                    thermalContent += `Diskon: -${item.discount.toLocaleString('id-ID')}\n`;
+                }
+            });
+            
+            thermalContent += '--------------------------------\n';
+            thermalContent += `Total:${' '.repeat(26 - transaction.total.toLocaleString('id-ID').length)}${transaction.total.toLocaleString('id-ID')}\n`;
+            thermalContent += `Bayar:${' '.repeat(26 - transaction.received.toLocaleString('id-ID').length)}${transaction.received.toLocaleString('id-ID')}\n`;
+            thermalContent += `Kembali:${' '.repeat(24 - transaction.change.toLocaleString('id-ID').length)}${transaction.change.toLocaleString('id-ID')}\n`;
+            thermalContent += '================================\n';
+            thermalContent += '    Terima kasih atas          \n';
+            thermalContent += '    kunjungan Anda!            \n';
+            thermalContent += '  Barang yang sudah dibeli     \n';
+            thermalContent += '   tidak dapat dikembalikan    \n';
+            thermalContent += '================================\n';
+            
+            return thermalContent;
+        }
+
+        // Product Management Search
+        function filterProductManagement(query) {
+            if (!query) {
+                renderProductList();
+                return;
+            }
+            
+            const filtered = products.filter(product => 
+                product.name.toLowerCase().includes(query) || 
+                (product.barcode && product.barcode.toLowerCase().includes(query)) ||
+                product.id.toString().includes(query)
+            );
+            
+            renderProductList(filtered);
+        }
+        
+        function clearProductSearch() {
+            document.getElementById('productManagementSearch').value = '';
+            renderProductList();
+        }
+        
+        // Transaction History Search and Filter
+        function filterTransactions() {
+            const searchQuery = document.getElementById('transactionSearch').value.toLowerCase();
+            const dateFilter = document.getElementById('transactionDateFilter').value;
+            
+            let filtered = [...transactions];
+            
+            // Apply search filter
+            if (searchQuery) {
+                filtered = filtered.filter(transaction => 
+                    transaction.id.toLowerCase().includes(searchQuery) ||
+                    transaction.items.some(item => 
+                        item.name.toLowerCase().includes(searchQuery)
+                    )
+                );
+            }
+            
+            // Apply date filter
+            if (dateFilter) {
+                const filterDate = new Date(dateFilter).toDateString();
+                filtered = filtered.filter(transaction => 
+                    new Date(transaction.date).toDateString() === filterDate
+                );
+            }
+            
+            renderTransactionHistory(filtered);
+        }
+        
+        function resetTransactionFilters() {
+            document.getElementById('transactionSearch').value = '';
+            document.getElementById('transactionDateFilter').value = '';
+            renderTransactionHistory();
         }
 
         // Auto Import on Login
@@ -2234,5 +2722,5 @@
             });
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'986bc8e6a42bea89',t:'MTc1OTE1MjA5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98702077065c6cf0',t:'MTc1OTE5NzYyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
